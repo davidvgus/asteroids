@@ -13,3 +13,9 @@ func _physics_process(delta: float) -> void:
 	print(input_vector)
 	velocity += input_vector * acceleration
 	move_and_slide()
+
+	var screen_size = get_viewport_rect().size
+	if global_position.y < 0:
+		global_position.y = screen_size.y
+	if global_position.y > screen_size.y:
+		global_position.y = 0
