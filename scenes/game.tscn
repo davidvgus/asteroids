@@ -17,3 +17,12 @@ scale = Vector2(0.6, 0.6)
 
 [node name="asteroid" parent="Asteroids" instance=ExtResource("3_0cht7")]
 position = Vector2(351, 327)
+
+[node name="asteroid2" parent="Asteroids" instance=ExtResource("3_0cht7")]
+position = Vector2(442, 165)
+
+[node name="asteroid3" parent="Asteroids" instance=ExtResource("3_0cht7")]
+position = Vector2(975, 381)
+
+[node name="asteroid4" parent="Asteroids" instance=ExtResource("3_0cht7")]
+position = Vector2(1181, 515)

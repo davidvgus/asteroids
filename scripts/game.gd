@@ -22,9 +22,7 @@ func _on_asteroid_exloded(pos, size):
         match size:
             Asteroid.AsteroidSize.LARGE:
                 spawn_asteroid(pos, Asteroid.AsteroidSize.MEDIUM)
-                spawn_asteroid(pos, Asteroid.AsteroidSize.MEDIUM)
             Asteroid.AsteroidSize.MEDIUM:
-                spawn_asteroid(pos, Asteroid.AsteroidSize.SMALL)
                 spawn_asteroid(pos, Asteroid.AsteroidSize.SMALL)
             Asteroid.AsteroidSize.SMALL:
                 pass
