@@ -4,7 +4,7 @@ signal laser_shot(laser)
 
 @export var max_speed := 350.0
 @export var acceleration := 10.0
-@export var rotatation_speed := 250.0
+@export var rotatation_speed := 500.0
 @export var laser_rof := 0.5
 
 @onready var muzzle = $Muzzle
