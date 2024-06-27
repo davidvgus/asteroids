@@ -25,10 +25,8 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
     var input_vector := Vector2(0, 0)
     if Input.is_action_pressed("move_foreward"):
-        print("move_forward")
         input_vector.y = -1
     if Input.is_action_pressed("move_backward"):
-        print("move_backward")
         input_vector.y = 1
     velocity += input_vector.rotated(rotation) * acceleration
     velocity = velocity.limit_length(max_speed)
