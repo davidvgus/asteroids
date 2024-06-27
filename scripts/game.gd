@@ -3,10 +3,19 @@ extends Node2D
 @onready var lasers = $Lasers
 @onready var player = $Player
 @onready var asteroids = $Asteroids
+@onready var hud = $UI/HUD
+@onready var player_spawn_postion = $PlayerSpawnPosition
 
 var default_time_scale = 1.0
 
 var asteroid_scene = preload ("res://scenes/asteroid.tscn")
+
+var score := 0:
+    set(value):
+        score = value
+        hud.set_score(score)
+
+var lives := 3
 
 func _process(delta: float) -> void:
     if Input.is_action_just_pressed("reset"):
@@ -20,16 +29,15 @@ func _process(delta: float) -> void:
         reset_time_scale()
 
 func _ready() -> void:
-
+    score = 0
     Engine.time_scale = default_time_scale
 
     for asteroid in asteroids.get_children():
         asteroid.connect("exploded", _on_asteroid_exloded)
+    player.connect("died", _on_player_died)
 
-#func _on_player_laser_shot(laser) -> void:
-#    lasers.add_child(laser)
-
-func _on_asteroid_exloded(pos, size):
+func _on_asteroid_exloded(pos, size, points):
+    score += points
     for i in range(2):
         match size:
             Asteroid.AsteroidSize.LARGE:
@@ -38,6 +46,7 @@ func _on_asteroid_exloded(pos, size):
                 spawn_asteroid(pos, Asteroid.AsteroidSize.SMALL)
             Asteroid.AsteroidSize.SMALL:
                 pass
+        push_error(points)
 
 func spawn_asteroid(pos, size):
     var a = asteroid_scene.instantiate()
@@ -62,3 +71,13 @@ func decrease_time_scale() -> void:
 
 func reset_time_scale() -> void:
     Engine.time_scale = default_time_scale
+
+func _on_player_died():
+    lives -= 1
+    print(lives)
+    if lives <= 0:
+        get_tree().reload_current_scene()
+        print(lives)
+    else:
+        await get_tree().create_timer(1.0).timeout
+        player.respawn(player_spawn_postion.global_position)
