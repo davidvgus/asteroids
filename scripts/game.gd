@@ -15,7 +15,10 @@ var score := 0:
         score = value
         hud.set_score(score)
 
-var lives := 3
+var lives := 3:
+    set(value):
+        lives = value
+        hud.set_lives(lives)
 
 func _process(delta: float) -> void:
     if Input.is_action_just_pressed("reset"):
@@ -74,10 +77,8 @@ func reset_time_scale() -> void:
 
 func _on_player_died():
     lives -= 1
-    print(lives)
     if lives <= 0:
         get_tree().reload_current_scene()
-        print(lives)
     else:
         await get_tree().create_timer(1.0).timeout
         player.respawn(player_spawn_postion.global_position)
