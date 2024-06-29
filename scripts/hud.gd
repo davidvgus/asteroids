@@ -19,3 +19,6 @@ func set_lives(value: int) -> void:
 
 func update_lives(value: int) -> void:
     set_lives(value)
+
+func _on_time_scale_slider_drag_ended(value_changed: bool) -> void:
+    Engine.time_scale = $Lives/TimeScaleSlider.value

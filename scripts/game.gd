@@ -23,6 +23,7 @@ var lives := 3:
         hud.set_lives(lives)
 
 func _process(delta: float) -> void:
+
     if Input.is_action_just_pressed("reset"):
         get_tree().reload_current_scene()
     
@@ -67,17 +68,18 @@ func spawn_asteroid(pos, size):
 
 func set_time_scale(scale: float) -> void:
     Engine.time_scale = scale
+    Engine.time_scale = clamp(Engine.time_scale, 0.1, 1.0)
 
 func get_time_scale() -> float:
     return Engine.time_scale
 
 func increase_time_scale() -> void:
     Engine.time_scale += 0.1
-    Engine.time_scale = clamp(Engine.time_scale, 0.1, 2.0)
+    Engine.time_scale = clamp(Engine.time_scale, 0.1, 1.0)
 
 func decrease_time_scale() -> void:
     Engine.time_scale -= 0.1
-    Engine.time_scale = clamp(Engine.time_scale, 0.1, 2.0)
+    Engine.time_scale = clamp(Engine.time_scale, 0.1, 1.0)
 
 func reset_time_scale() -> void:
     Engine.time_scale = default_time_scale

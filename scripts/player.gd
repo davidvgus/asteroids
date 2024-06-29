@@ -6,7 +6,7 @@ signal died
 @export var max_speed := 350.0
 @export var acceleration := 10.0
 @export var rotatation_speed := 500.0
-@export var laser_rof := 0.001
+@export var laser_rof := 0.1
 
 @onready var muzzle = $Muzzle
 @onready var lasers = $"../Lasers"
@@ -22,11 +22,12 @@ var alive := true
 func _process(delta: float) -> void:
     engine_time_scale = Engine.time_scale
     if Input.is_action_pressed("shoot"):
-        if !shoot_cooldown:
-            shoot_laser()
-            shoot_cooldown = true
-            await get_tree().create_timer(laser_rof / engine_time_scale).timeout
-            shoot_cooldown = false
+        if !Input.is_action_pressed("alt_input"):
+            if !shoot_cooldown:
+                shoot_laser()
+                shoot_cooldown = true
+                await get_tree().create_timer(laser_rof / engine_time_scale).timeout
+                shoot_cooldown = false
 
 func _physics_process(delta: float) -> void:
     var input_vector := Vector2(0, 0)
