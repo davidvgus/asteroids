@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://r6ob56hhvvx8"]
+
+[ext_resource type="AudioStream" uid="uid://bemvjfohw16m3" path="res://assets/audio/sfx_laser1.wav" id="1_ecn3o"]
+
+[node name="LaserSound" type="AudioStreamPlayer"]
+stream = ExtResource("1_ecn3o")

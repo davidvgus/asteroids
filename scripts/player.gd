@@ -25,6 +25,8 @@ func _process(delta: float) -> void:
         if !Input.is_action_pressed("alt_input"):
             if !shoot_cooldown:
                 shoot_laser()
+                $LaserSound.pitch_scale = engine_time_scale
+                $LaserSound.play()
                 shoot_cooldown = true
                 await get_tree().create_timer(laser_rof / engine_time_scale).timeout
                 shoot_cooldown = false
