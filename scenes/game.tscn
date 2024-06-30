@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bd2gxecpomjsh"]
+[gd_scene load_steps=10 format=3 uid="uid://bd2gxecpomjsh"]
 
 [ext_resource type="PackedScene" uid="uid://ju4yffosj7dl" path="res://scenes/player.tscn" id="1_n3qn6"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_we6d4"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://bv4jgfmboe72q" path="res://scenes/gme_over_menu.tscn" id="4_1k1sn"]
 [ext_resource type="PackedScene" uid="uid://tc2nvfijt050" path="res://scenes/ui.tscn" id="4_jwos5"]
 [ext_resource type="PackedScene" uid="uid://5r70dkt6eo4i" path="res://scenes/player_spawn_area.tscn" id="7_demt8"]
+[ext_resource type="AudioStream" uid="uid://v3jwnhp1puip" path="res://assets/audio/hit.wav" id="8_aepmr"]
+[ext_resource type="AudioStream" uid="uid://dekp63j7t0vip" path="res://assets/audio/explode.wav" id="9_jxg6o"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_we6d4")
@@ -45,3 +47,11 @@ position = Vector2(1181, 515)
 position = Vector2(640, 360)
 
 [node name="PlayerSpawnArea" parent="PlayerSpawnPosition" instance=ExtResource("7_demt8")]
+
+[node name="AsteroidHitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_aepmr")
+volume_db = 11.445
+
+[node name="PlayerDies" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_jxg6o")
+volume_db = 9.455

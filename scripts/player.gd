@@ -12,6 +12,7 @@ signal died
 @onready var lasers = $"../Lasers"
 @onready var sprite = $Sprite2D
 @onready var engine_time_scale = Engine.time_scale
+@onready var cshape = $CollisionShape2D
 
 var laser_scene = preload ("res://scenes/laser.tscn")
 
@@ -20,6 +21,8 @@ var shoot_cooldown = false
 var alive := true
 
 func _process(delta: float) -> void:
+    if !alive:
+        return
     engine_time_scale = Engine.time_scale
     if Input.is_action_pressed("shoot"):
         if !Input.is_action_pressed("alt_input"):
@@ -32,6 +35,9 @@ func _process(delta: float) -> void:
                 shoot_cooldown = false
 
 func _physics_process(delta: float) -> void:
+    if !alive:
+        return
+
     var input_vector := Vector2(0, 0)
     if Input.is_action_pressed("move_foreward"):
         input_vector.y = -1
@@ -68,14 +74,16 @@ func shoot_laser():
 
 func die():
     if alive == true:
+        velocity = Vector2.ZERO
         alive = false
-        emit_signal("died")
+        cshape.set_deferred("disabled", true)
         sprite.visible = false
-        process_mode = Node.PROCESS_MODE_DISABLED
+        emit_signal("died")
+        #process_mode = Node.PROCESS_MODE_DISABLED
 
 func respawn(pos):
-    print("respawn")
+    cshape.set_deferred("disabled", false)
     global_position = pos
     alive = true
     sprite.visible = true
-    process_mode = Node.PROCESS_MODE_INHERIT
+    #process_mode = Node.PROCESS_MODE_INHERIT

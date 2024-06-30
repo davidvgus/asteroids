@@ -45,7 +45,8 @@ func _ready() -> void:
 
 func _on_asteroid_exloded(pos, size, points):
     score += points
-
+    $AsteroidHitSound.pitch_scale = Engine.time_scale
+    $AsteroidHitSound.play()
     for i in range(2):
         match size:
             Asteroid.AsteroidSize.LARGE:
@@ -86,6 +87,9 @@ func reset_time_scale() -> void:
 
 func _on_player_died():
     lives -= 1
+    $PlayerDies.pitch_scale = Engine.time_scale
+    $PlayerDies.play()
+    player.global_position = player_spawn_postion.global_position
     if lives <= 0:
         await get_tree().create_timer(1.0).timeout
         game_over_screen.visible = true
