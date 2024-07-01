@@ -1,23 +1,28 @@
 class_name Player extends CharacterBody2D
 
 signal laser_shot(laser)
+#signal missile_fired(laser)
 signal died
 
 @export var max_speed := 350.0
 @export var acceleration := 10.0
 @export var rotatation_speed := 500.0
 @export var laser_rof := 0.1
+@export var missile_rof := 0.010
 
 @onready var muzzle = $Muzzle
 @onready var lasers = $"../Lasers"
+@onready var missiles = $"../Missiles"
 @onready var sprite = $Sprite2D
 @onready var engine_time_scale = Engine.time_scale
 @onready var cshape = $CollisionShape2D
 @onready var radar_beam = $RadarBeam
 
 var laser_scene = preload ("res://scenes/laser.tscn")
+var missile_scene = preload ("res://scenes/missile.tscn")
 
 var shoot_cooldown = false
+var shoot_alt_cooldown = false
 
 var alive := true
 
@@ -35,10 +40,21 @@ func _process(delta: float) -> void:
                 await get_tree().create_timer(laser_rof / engine_time_scale).timeout
                 shoot_cooldown = false
     
+    if Input.is_action_just_pressed("shoot_alt"):
+        print(Input)
+        print(get_global_mouse_position())
+        if !Input.is_action_pressed("alt_input"):
+            if !shoot_alt_cooldown:
+                fire_missile(get_global_mouse_position())
+                #$LaserSound.pitch_scale = engine_time_scale
+                #$LaserSound.play()
+                shoot_alt_cooldown = true
+                await get_tree().create_timer(missile_rof / engine_time_scale).timeout
+                shoot_alt_cooldown = false
+
     if radar_beam.is_colliding():
         var collider = radar_beam.get_collider(0)
         if collider is Asteroid:
-            print("Asteroid detected")
             collider.just_detected()
 
 func _physics_process(delta: float) -> void:
@@ -81,6 +97,14 @@ func shoot_laser():
     laser.global_position = muzzle.global_position
     laser.rotation = rotation
     emit_signal("laser_shot", laser)
+
+func fire_missile(target):
+    var missile = missile_scene.instantiate()
+    missile.set_target_position(target)
+    missiles.add_child(missile)
+    missile.global_position = muzzle.global_position
+    missile.rotation = rotation
+    #emit_signal("missile_fired", missile)
 
 func die():
     if alive == true:

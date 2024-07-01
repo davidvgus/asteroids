@@ -71,7 +71,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 func fade_out():
     fade_out_tween = get_tree().create_tween()
-    fade_out_tween.tween_property(self, "modulate:a", 0, fade_out_time)
+    fade_out_tween.tween_property(self, "modulate:a", 0.10, fade_out_time)
 
 func just_detected():
     modulate.a = 1

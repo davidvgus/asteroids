@@ -26,6 +26,11 @@ offset_bottom = 38.0
 [node name="Player" parent="." instance=ExtResource("1_n3qn6")]
 position = Vector2(640, 360)
 scale = Vector2(0.6, 0.6)
+max_speed = 350.0
+acceleration = 10.0
+rotatation_speed = 500.0
+laser_rof = 0.1
+missile_rof = 0.01
 
 [node name="Lasers" type="Node" parent="."]
 
@@ -55,3 +60,5 @@ volume_db = 11.445
 [node name="PlayerDies" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_jxg6o")
 volume_db = 9.455
+
+[node name="Missiles" type="Node" parent="."]

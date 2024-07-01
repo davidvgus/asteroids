@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwskvmhjuxd27"]
+
+[ext_resource type="Script" path="res://scripts/missile.gd" id="1_ay6bd"]
+[ext_resource type="Texture2D" uid="uid://disrpuhncffn" path="res://assets/textures/spaceMissiles_001.png" id="1_bx05s"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q7fot"]
+radius = 4.0
+
+[node name="Missile" type="Area2D"]
+scale = Vector2(0.4, 0.4)
+script = ExtResource("1_ay6bd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -18)
+texture = ExtResource("1_bx05s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -19)
+shape = SubResource("CapsuleShape2D_q7fot")
