@@ -50,3 +50,6 @@ func _on_area_entered(area: Area2D) -> void:
 
 func set_target_position(pos: Vector2) -> void:
     target_position = pos
+
+func set_init_rot(rot):
+    rotation = rot

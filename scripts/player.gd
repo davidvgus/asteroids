@@ -101,6 +101,7 @@ func shoot_laser():
 func fire_missile(target):
     var missile = missile_scene.instantiate()
     missile.set_target_position(target)
+    missile.set_init_rot(rotation)
     missiles.add_child(missile)
     missile.global_position = muzzle.global_position
     missile.rotation = rotation
