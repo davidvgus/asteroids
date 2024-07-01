@@ -44,8 +44,8 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
     if !alive:
         return
-
-    radar_beam.rotation += deg_to_rad(5.0)
+    #var scan speed = 5.0 * Engine.time_scale
+    radar_beam.rotation += deg_to_rad(5.0 * Engine.time_scale)
 
     var input_vector := Vector2(0, 0)
 
