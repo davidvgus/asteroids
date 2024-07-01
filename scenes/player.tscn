@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ju4yffosj7dl"]
+[gd_scene load_steps=6 format=3 uid="uid://ju4yffosj7dl"]
 
 [ext_resource type="Texture2D" uid="uid://cmr0xux2x6yr6" path="res://assets/textures/player_ship.png" id="1_3dns8"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_bal8w"]
@@ -6,6 +6,10 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j1m31"]
 radius = 55.2268
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f63r5"]
+radius = 99.91
+height = 199.82
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -23,3 +27,9 @@ shape = SubResource("CircleShape2D_j1m31")
 
 [node name="Muzzle" type="Node2D" parent="."]
 position = Vector2(0, -42)
+
+[node name="RadarBeam" type="ShapeCast2D" parent="."]
+shape = SubResource("CapsuleShape2D_f63r5")
+target_position = Vector2(0, 1200)
+collision_mask = 4
+collide_with_areas = true

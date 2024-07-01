@@ -1,15 +1,18 @@
 class_name Asteroid extends Area2D
 
 signal exploded(pos, size)
+signal detected
 
 var movement_vector := Vector2(0, -1)
 enum AsteroidSize {SMALL, MEDIUM, LARGE}
 @export var size = AsteroidSize.LARGE
+@export var fade_out_time = 1.0
 
 var speed := 50
 
 @onready var sprite = $Sprite2D
 @onready var collision_shape = $CollisionShape2D
+@onready var fade_out_tween = $Tween
 
 @export var points: int:
     get:
@@ -25,6 +28,7 @@ var speed := 50
 
 func _ready() -> void:
     rotation = randf_range(0, 2 * PI)
+    fade_out()
 
     match size:
         AsteroidSize.LARGE:
@@ -64,3 +68,11 @@ func _on_body_entered(body: Node2D) -> void:
     if body is Player:
         var player = body
         player.die()
+
+func fade_out():
+    fade_out_tween = get_tree().create_tween()
+    fade_out_tween.tween_property(self, "modulate:a", 0, fade_out_time)
+
+func just_detected():
+    modulate.a = 1
+    fade_out()

@@ -13,6 +13,7 @@ signal died
 @onready var sprite = $Sprite2D
 @onready var engine_time_scale = Engine.time_scale
 @onready var cshape = $CollisionShape2D
+@onready var radar_beam = $RadarBeam
 
 var laser_scene = preload ("res://scenes/laser.tscn")
 
@@ -33,12 +34,21 @@ func _process(delta: float) -> void:
                 shoot_cooldown = true
                 await get_tree().create_timer(laser_rof / engine_time_scale).timeout
                 shoot_cooldown = false
+    
+    if radar_beam.is_colliding():
+        var collider = radar_beam.get_collider(0)
+        if collider is Asteroid:
+            print("Asteroid detected")
+            collider.just_detected()
 
 func _physics_process(delta: float) -> void:
     if !alive:
         return
 
+    radar_beam.rotation += deg_to_rad(5.0)
+
     var input_vector := Vector2(0, 0)
+
     if Input.is_action_pressed("move_foreward"):
         input_vector.y = -1
     if Input.is_action_pressed("move_backward"):
